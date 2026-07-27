@@ -7,10 +7,9 @@
 .atom/
 .build/
 .buildlog/
-.history
-.svn/
-.swiftpm/
 migrate_working_dir/
+.gradle/
+**/android/.gradle/
 
 # IntelliJ related
 *.iml
