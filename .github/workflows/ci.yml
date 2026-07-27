@@ -69,8 +69,39 @@ jobs:
           name: 2048-android-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
+  build_windows:
+    name: Build Windows Application
+    needs: analyze_and_test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Enable Developer Mode / Symlinks
+        run: New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" -Name "AllowDevelopmentWithoutDevLicense" -PropertyType DWord -Value 1 -Force
+        continue-on-error: true
+
+      - name: Build Windows Executable
+        run: flutter build windows --release
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2048-windows-release
+          path: build/windows/x64/runner/Release/
+
   build_web:
-    name: Build & Deploy Web
+    name: Build Web
     needs: analyze_and_test
     runs-on: ubuntu-latest
 

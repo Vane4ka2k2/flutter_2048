@@ -1,169 +1,169 @@
 <div align="center">
 
-# 🎮 2048 Grandmaster AI & Flutter Edition
+# 🎮 2048 Grandmaster AI — Flutter Издание
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
-[![AI Engine](https://img.shields.io/badge/AI-Expectimax_Search-FF6F00?style=for-the-badge&logo=cpu&logoColor=white)](#-ai-bot-architecture)
-[![Platforms](https://img.shields.io/badge/Platforms-Android_%7C_Windows_%7C_Web-42A5F5?style=for-the-badge)](#-installation--running)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![AI Engine](https://img.shields.io/badge/AI-Expectimax_Search-FF6F00?style=for-the-badge&logo=cpu&logoColor=white)](#-архитектура-ии-бота)
+[![Платформы](https://img.shields.io/badge/Платформы-Android_%7C_Windows_%7C_Web-42A5F5?style=for-the-badge)](#-запуск-и-сборка)
+[![Лицензия](https://img.shields.io/badge/Лицензия-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-*A sleek, highly optimized 2048 puzzle game built with **Flutter**, featuring a high-performance **Expectimax AI Bot**, dynamic theme modes, game persistence, and multi-platform support (Android, Windows, Web).*
+*Современная, стильная и высокопроизводительная игра 2048 на **Flutter** со встроенным **автономным ИИ-ботом Грандмастер** (алгоритм Expectimax), поддержкой темного/светлого режима, отмены ходов, сохранения состояния и сборки под Android, Windows и Web.*
 
-[Key Features](#-key-features) • [AI Bot Engine](#-ai-bot-architecture) • [Getting Started](#-installation--running) • [Project Structure](#-project-structure)
+[Ключевые возможности](#-ключевые-возможности) • [Архитектура ИИ-бота](#-архитектура-ии-бота) • [Запуск и Сборка](#-запуск-и-сборка) • [Структура проекта](#-структура-проекта)
 
 </div>
 
 ---
 
-## ✨ Key Features
+## ✨ Ключевые возможности
 
-- 🤖 **Grandmaster Expectimax AI Bot**:
-  - Autonomous solver capable of reaching **2048, 4096, 8192, and 16384+**.
-  - **Adaptive Search Depth**: Expands up to 5 steps ahead when the board gets crowded ($\le 3$ empty cells).
-  - **Logarithmic Snake Matrix**: Anchors maximum tiles to the top-left corner and maintains monotonic tile chains.
-  - **Turbo Mode ⚡**: Toggle between Normal (150ms) and Turbo (50ms) auto-play speeds.
+- 🤖 **Автономный ИИ-Бот уровня Грандмастер**:
+  - Уверенно собирает плашки **2048, 4096, 8192 и 16384+**.
+  - **Динамическая глубина поиска (Adaptive Depth)**: углубляет просчет до **4-5 шагов вперед**, когда на поле мало места ($\le 3$ пустые ячейки).
+  - **Логарифмическая змеевидная матрица (Snake Pattern Matrix)**: удерживает наибольшую плитку в левом верхнем углу $(0,0)$ и строит монотонные цепочки.
+  - **Режим Турбо ⚡**: переключение между обычным режимом (150 мс) и молниеносным авто-прохождением (50 мс на шаг).
 
-- 🎨 **Modern UI & Fluid Animations**:
-  - Crisp Material 3 design with built-in **Light & Dark Theme** toggle.
-  - **Zero-Lag Animations**: 60fps tile sliding (`AnimatedPositioned`) and scale pulses (`AnimatedScale`).
-  - **Auto-Scaling Typography**: Font sizes automatically shrink to fit 5-digit and 6-digit values (up to 131,072).
-  - Extended color palette for tiles from **2** up to **131,072**.
+- 🎨 **Современный UI и Анимации**:
+  - Дизайн Material 3 с переключением **Светлой и Темной темы**.
+  - Плавные анимации со скоростью 60 FPS (анимированный сдвиг `AnimatedPositioned` и масштаб `AnimatedScale`).
+  - **Авто-масштабирование текста**: шрифт динамически уменьшается для 5-значных и 6-значных чисел (до 131 072).
+  - Расширенная цветовая палитра плиток от **2** до **131 072**.
 
-- 💾 **State Persistence & Quality of Life**:
-  - **Auto-Save**: Game state, high score, and current score automatically persist across restarts via `SharedPreferences`.
-  - **Undo Feature**: One-tap move rollback to recover from mis-swipes.
-  - **Keep Playing Mode**: Continue playing beyond tile 2048 without losing momentum.
+- 💾 **Сохранение состояния и UX**:
+  - **Автосохранение**: текущая матрица плашек, счет и рекорд сохраняются в `SharedPreferences` при каждом ходе.
+  - **Отмена хода (Undo)**: возможность откатить неудачный свайп на 1 шаг назад.
+  - **Режим "Продолжить" (Keep Playing)**: возможность играть дальше после достижения плитки 2048.
 
-- ⌨️ **Cross-Platform Control**:
-  - **Mobile**: Touch swipe gestures with velocity & distance thresholding.
-  - **Desktop / Web**: Arrow keys and WASD keyboard controls via `KeyboardListener`.
+- ⌨️ **Мультиплатформенное управление**:
+  - **Мобильные устройства**: управление свайпами с отслеживанием накопительного сдвига.
+  - **Десктоп и Web**: поддержка клавиатуры (стрелки управления и клавиши WASD).
 
 ---
 
-## 🧠 AI Bot Architecture
+## 🧠 Архитектура ИИ-Бота
 
-The AI engine uses an optimized **Expectimax Search** algorithm combined with memoization (Transposition Table) and dynamic heuristics:
+Сердцем ИИ является алгоритм **Expectimax Search** с хэшированием вычисленных позиций (Transposition Table) и сбалансированной эвристической функцией оценки:
 
 ```
-                  [ Player Node (Max) ]
+                  [ Узел Игрока (Max) ]
                        /    |    \
-             (Left)   /  (Down)   \   (Right)
+           (Влево)    /  (Вниз)   \   (Вправо)
                      v      v      v
-              [ Chance Node (Expected Value) ]
+             [ Узел Вероятности (Expectimax) ]
                      /              \
-           (90% Spawn 2)          (10% Spawn 4)
+           (90% Спавн 2)          (10% Спавн 4)
                   /                    \
                  v                      v
-        [ Next Player Node ]   [ Next Player Node ]
+        [ Следующий Узел ]     [ Следующий Узел ]
 ```
 
-### Heuristic Evaluation Function ($E$)
+### Математическая функция оценки ($E$)
 
 $$E = \text{SnakeScore} + \text{EmptyBonus} + \text{CornerLockBonus} + \text{Monotonicity} + \text{Smoothness}$$
 
-1. **Snake Weight Matrix**: Multiplies logarithmic tile values ($\log_2(\text{tile})$) by a fixed snake gradient matrix anchored at $(0,0)$.
-2. **Adaptive Depth**:
-   - $\text{Empty Cells} > 6 \implies \text{Depth } 2$
-   - $3 < \text{Empty Cells} \le 6 \implies \text{Depth } 3$
-   - $\text{Empty Cells} \le 3 \implies \text{Depth } 4\text{--}5$
-3. **Corner Lock**: Gives a steady $+150$ bonus when the largest tile remains in $(0, 0)$ and a penalty if displaced.
+1. **Snake Weight Matrix**: логарифмические значения плиток ($\log_2(\text{tile})$) умножаются на весовую змеевидную матрицу с якорем в точке $(0,0)$.
+2. **Динамическая глубина**:
+   - $\text{Пустые ячейки} > 6 \implies \text{Глубина } 2$
+   - $3 < \text{Пустые ячейки} \le 6 \implies \text{Глубина } 3$
+   - $\text{Пустые ячейки} \le 3 \implies \text{Глубина } 4\text{--}5$
+3. **Corner Lock**: бонус $+150$ при удержании максимальной плитки в левом верхнем углу $(0, 0)$ и штраф $-200$ при вынужденном сдвиге.
 
 ---
 
-## 🛠 Project Structure
+## 🛠 Структура проекта
 
 ```
 lib/
 ├── controllers/
-│   ├── ai_bot.dart          # Expectimax AI Solver & Transposition Table
-│   └── game_controller.dart # Main Game Logic, State Management & Persistence
+│   ├── ai_bot.dart          # Поиск Expectimax, хэширование позиций и эвристика ИИ
+│   └── game_controller.dart # Логика игры, управление состоянием, Undo и сохранение
 ├── models/
-│   └── tile.dart            # Tile Data Model (row, col, value, merge flags)
+│   └── tile.dart            # Модель плитки (строка, колонка, значение, флаги)
 ├── theme/
-│   └── game_colors.dart     # Color tokens for Light/Dark mode & tile spectrum
+│   └── game_colors.dart     # Цветовая гамма темной/светлой темы и плиток до 131072
 └── views/
-    ├── game_screen.dart     # Responsive Scaffold & Action Header
+    ├── game_screen.dart     # Главный экран и верхняя панель управления
     └── widgets/
-        ├── board_grid.dart          # Interactive Grid, Gestures & KeyboardListener
-        ├── game_over_overlay.dart   # Win / Game Over Dialog
-        ├── score_box.dart            # Animated Score / Best Display
-        └── tile_widget.dart          # Animated Position & Scale Widget
+        ├── board_grid.dart          # Поле 4x4, жест свайпа и KeyboardListener
+        ├── game_over_overlay.dart   # Оверлей победы / поражения
+        ├── score_box.dart            # Виджет вывода очков и рекорда
+        └── tile_widget.dart          # Анимированный виджет плитки с авто-масштабом
 ```
 
 ---
 
-## 🚀 Installation & Running
+## 🚀 Запуск и Сборка
 
-### Prerequisites
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) (v3.0 or higher)
-- Dart SDK (v3.0 or higher)
+### Требования
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (версия 3.0 и выше)
+- Dart SDK (версия 3.0 и выше)
 
-### Quick Start
+### Быстрый запуск
 
-1. **Clone the repository**:
+1. **Клонировать репозиторий**:
    ```bash
    git clone https://github.com/Vane4ka2k2/flutter_2048.git
    cd flutter_2048
    ```
 
-2. **Install dependencies**:
+2. **Установить зависимости**:
    ```bash
    flutter pub get
    ```
 
-3. **Run on target platform**:
-   - **Chrome / Web**:
+3. **Запустить на целевой платформе**:
+   - **Браузер (Chrome)**:
      ```bash
      flutter run -d chrome
      ```
-   - **Windows Desktop**:
+   - **Windows ПК**:
      ```bash
      flutter run -d windows
      ```
-   - **Android Device / Emulator**:
+   - **Android**:
      ```bash
      flutter run
      ```
 
 ---
 
-## 📦 Building Releases
+## 📦 Сборка дистрибутивов
 
 - **Android APK**:
   ```bash
   flutter build apk --release
   ```
-  *Output*: `build/app/outputs/flutter-apk/app-release.apk`
+  *Результат*: `build/app/outputs/flutter-apk/app-release.apk`
 
-- **Windows Desktop (.exe)**:
+- **Windows приложение (.exe)**:
   ```bash
-  flutter build windows
+  flutter build windows --release
   ```
-  *Output*: `build/windows/x64/runner/Release/`
+  *Результат*: `build/windows/x64/runner/Release/`
 
-- **Web (HTML5)**:
+- **Web сборка (HTML5)**:
   ```bash
-  flutter build web
+  flutter build web --release
   ```
-  *Output*: `build/web/`
+  *Результат*: `build/web/`
 
 ---
 
-## 🧪 Testing
+## 🧪 Тестирование
 
-Run static analysis and automated unit/widget tests:
+Запуск статического анализатора и встроенных автотестов:
 
 ```bash
-# Static analysis
+# Статический анализ
 flutter analyze
 
-# Execute test suite (9/9 passed)
+# Прогон всех автотестов (9/9 пройдены)
 flutter test
 ```
 
 ---
 
-## 📄 License
+## 📄 Лицензия
 
-This project is open-source and available under the [MIT License](LICENSE).
+Проект распространяется под открытой лицензией [MIT License](LICENSE).
