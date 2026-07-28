@@ -5,10 +5,10 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![AI Engine](https://img.shields.io/badge/AI-Expectimax_Search-FF6F00?style=for-the-badge&logo=cpu&logoColor=white)](#-архитектура-ии-бота)
-[![Платформы](https://img.shields.io/badge/Платформы-Android_%7C_Windows_%7C_Web-42A5F5?style=for-the-badge)](#-запуск-и-сборка)
+[![Платформы](https://img.shields.io/badge/Платформы-Android_%7C_iOS_%7C_Windows_%7C_macOS_%7C_Linux_%7C_Web-42A5F5?style=for-the-badge)](#-запуск-и-сборка)
 [![Лицензия](https://img.shields.io/badge/Лицензия-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-*Современная, стильная и высокопроизводительная игра 2048 на **Flutter** со встроенным **автономным ИИ-ботом Грандмастер** (алгоритм Expectimax), поддержкой темного/светлого режима, отмены ходов, сохранения состояния и сборки под Android, Windows и Web.*
+*Современная, стильная и высокопроизводительная игра 2048 на **Flutter** со встроенным **автономным ИИ-ботом Грандмастер** (алгоритм Expectimax), поддержкой темного/светлого режима, отмены ходов, сохранения состояния и сборки под Android, iOS, Windows, macOS, Linux и Web.*
 
 [Ключевые возможности](#-ключевые-возможности) • [Архитектура ИИ-бота](#-архитектура-ии-бота) • [Запуск и Сборка](#-запуск-и-сборка) • [Структура проекта](#-структура-проекта)
 
@@ -142,11 +142,36 @@ lib/
   ```
   *Результат*: `build/windows/x64/runner/Release/`
 
+- **macOS приложение (.app)**:
+  ```bash
+  flutter build macos --release
+  ```
+  *Результат*: `build/macos/Build/Products/Release/flutter_2048.app`
+
+- **Linux приложение**:
+  ```bash
+  flutter build linux --release
+  ```
+  *Результат*: `build/linux/x64/release/bundle/`
+
 - **Web сборка (HTML5)**:
   ```bash
   flutter build web --release
   ```
   *Результат*: `build/web/`
+
+---
+
+## 🏷️ Автоматический релиз на GitHub Releases
+
+Релиз для всех платформ создается автоматически при отправке тега версии `v*` (например, `v1.0.0`):
+
+```bash
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+```
+
+GitHub Actions автоматически соберет артефакты под Android (`.apk`), Windows (`.zip`), macOS (`.zip`), Linux (`.tar.gz`), Web (`.zip`) и прикрепит их к разделу **Releases** репозитория.
 
 ---
 
