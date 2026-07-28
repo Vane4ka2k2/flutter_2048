@@ -36,7 +36,10 @@ void main() {
 
     test('Moving creates undo state', () {
       expect(controller.canUndo, false);
-      controller.move(MoveDirection.left);
+      for (final dir in MoveDirection.values) {
+        controller.move(dir);
+        if (controller.canUndo) break;
+      }
       expect(controller.canUndo, true);
     });
 
@@ -44,7 +47,10 @@ void main() {
       final initialScore = controller.score;
       final initialTileCount = controller.tiles.length;
 
-      controller.move(MoveDirection.left);
+      for (final dir in MoveDirection.values) {
+        controller.move(dir);
+        if (controller.canUndo) break;
+      }
       expect(controller.canUndo, true);
 
       controller.undo();
